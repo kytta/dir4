@@ -1,0 +1,123 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+  "hatchling",
+]
+
+[project]
+name = "dir4"
+version = "0.1.0"
+description = "A low-fat task runner."
+readme = "README.md"
+license = "BSD-3-Clause"
+maintainers = [
+    { name = "Nikita Karamov", email = "me@kytta.dev" },
+]
+authors = [
+    { name = "Nikita Karamov", email = "me@kytta.dev" },
+]
+requires-python = ">=3.7"
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Operating System :: OS Independent",
+  "Operating System :: POSIX",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Typing :: Typed",
+]
+dependencies = [
+]
+[project.urls]
+issues = "https://github.com/kytta/dir4/issues"
+repository = "https://github.com/kytta/dir4.git"
+sponsor = "https://www.kytta.dev/donate/"
+
+[tool.hatch.envs.default]
+dependencies = [
+  "pytest",
+  "coverage[toml]",
+  "covdefaults",
+]
+
+[tool.hatch.envs.default.scripts]
+test = [
+    "pytest {args:tests}",
+]
+cov = [
+    "coverage erase",
+    "coverage run -m pytest {args:tests}",
+    "coverage report",
+    "coverage xml"
+]
+
+[[tool.hatch.envs.test.matrix]]
+python = ["37", "38", "39", "310", "311", "312"]
+
+[tool.autopep8]
+ignore = ["W503"]
+
+[tool.ruff]
+line-length = 79
+target-version = "py37"
+
+select = [
+    "F",       # pyflakes
+    "E", "W",  # pycodestyle
+    "C90",     # mccabe
+    "N",       # pep8-naming
+    "S",       # bandit
+    "BLE",     # flake8-blind-except
+    "FBT",     # flake8-boolean-trap
+    "B",       # flake8-bugbear
+    "A",       # flake8-builtins
+    "C4",      # flake8-comprehensions
+    "DTZ",     # flake8-datetimez
+    "EM",      # flake8-errmsg
+    "ISC",     # flake8-implicit-str-concat
+    "ICN",     # flake8-import-conventions
+    "PIE",     # flake8-pie
+    "T20",     # flake8-print
+    "Q",       # flake8-quotes
+    "RET",     # flake8-return
+    "SIM",     # flake8-simplify
+    "PTH",     # flake8-use-pathlib
+    "ERA",     # eradicate
+    "PL",      # pylint
+    "TRY",     # tryceratops
+    "RUF",     # ruff
+]
+
+
+[tool.ruff.mccabe]
+max-complexity = 10
+
+[tool.ruff.flake8-quotes]
+inline-quotes = "double"
+
+[tool.pytest.ini_options]
+addopts = "--tb=short --showlocals"
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
+
+[tool.mypy]
+python_version = 3.7
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_untyped_defs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["tests.*"]
+ignore_missing_imports = true
+check_untyped_defs = false
+disallow_incomplete_defs = false
+disallow_untyped_defs = false
